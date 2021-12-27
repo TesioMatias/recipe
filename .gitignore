@@ -13,6 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+*.hprof
 
 # Built application files
 *.apk
@@ -34,4 +35,4 @@ tmp/
 .gradle/
 build/
 config/
-build-cache/    
+build-cache/

@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -14,6 +16,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -27,7 +30,18 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "1.8"
+        useIR = true
+    }
+    composeOptions {
+        def kotlin_compiler_version = "1.4.0"
+        kotlinCompilerVersion kotlin_compiler_version
+
+        def kotlin_compiler_extension_version = "1.0.0-alpha08"
+        kotlinCompilerExtensionVersion kotlin_compiler_extension_version
+    }
+    buildFeatures {
+        compose true
     }
 }
 
@@ -37,9 +51,22 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$materialDesingVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "androidx.ui:ui-tooling:$androidxUiVersion"
+    implementation "androidx.compose.ui:ui:$composeVersion"
+    implementation "androidx.compose.foundation:foundation:$composeVersion"
+    implementation "androidx.compose.runtime:runtime-livedata:$composeVersion"
+    implementation "androidx.compose.runtime:runtime-rxjava2:$composeVersion"
+    implementation "androidx.compose.material:material:$composeVersion"
+    implementation "androidx.compose.material:material-icons-core:$composeVersion"
+    implementation "androidx.compose.material:material-icons-extended:$composeVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$navVersion"
 
     testImplementation "junit:junit:$jUnitVersion"
 
+    androidTestImplementation "androidx.navigation:navigation-testing:$navVersion"
     androidTestImplementation "androidx.test.ext:junit:$jUnitExtVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
 }

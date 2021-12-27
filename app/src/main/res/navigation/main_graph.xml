@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/recipeListFragment">
+    <fragment
+        android:id="@+id/recipeListFragment"
+        android:name="com.matiastesio.mvvmrecipe.RecipeListFragment"
+        android:label="RecipeListFragment" >
+        <action
+            android:id="@+id/action_recipeListFragment_to_recipeFragment2"
+            app:destination="@id/recipeFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeFragment2"
+        android:name="com.matiastesio.mvvmrecipe.RecipeFragment"
+        android:label="RecipeFragment" />
+</navigation>
