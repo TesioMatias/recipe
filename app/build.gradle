@@ -2,7 +2,9 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -52,6 +54,8 @@ dependencies {
     implementation "com.google.android.material:material:$materialDesingVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+    // Jetpack compose dependencies
     implementation "androidx.ui:ui-tooling:$androidxUiVersion"
     implementation "androidx.compose.ui:ui:$composeVersion"
     implementation "androidx.compose.foundation:foundation:$composeVersion"
@@ -60,10 +64,23 @@ dependencies {
     implementation "androidx.compose.material:material:$composeVersion"
     implementation "androidx.compose.material:material-icons-core:$composeVersion"
     implementation "androidx.compose.material:material-icons-extended:$composeVersion"
+
+    // Navigation component dependencies
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$navVersion"
 
+    // Retrofit dependencies
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.google.code.gson:gson:$gsonVersion"
+
+    // Hilt dependencies
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltLifecycleVersion"
+    kapt "androidx.hilt:hilt-compiler:$hiltLifecycleVersion"
+
+    // Test dependencies
     testImplementation "junit:junit:$jUnitVersion"
 
     androidTestImplementation "androidx.navigation:navigation-testing:$navVersion"
