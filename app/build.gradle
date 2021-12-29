@@ -22,9 +22,17 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL", '"https://food2fork.ca/api/recipe/"'
+            buildConfigField "String", "AUTH_TOKEN", '"Token 9c8b06d329136da358c2d00e76946b0111ce2c48"'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL", '"https://food2fork.ca/api/recipe/"'
+            buildConfigField "String", "AUTH_TOKEN", '"Token 9c8b06d329136da358c2d00e76946b0111ce2c48"'
         }
     }
     compileOptions {
@@ -72,7 +80,7 @@ dependencies {
 
     // Retrofit dependencies
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
     // Hilt dependencies
     implementation "com.google.dagger:hilt-android:$hiltVersion"

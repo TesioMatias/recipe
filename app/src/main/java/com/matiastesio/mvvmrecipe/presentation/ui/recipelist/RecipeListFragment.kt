@@ -1,6 +1,7 @@
 package com.matiastesio.mvvmrecipe.presentation.ui.recipelist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,12 +24,35 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.matiastesio.mvvmrecipe.R
+import com.matiastesio.mvvmrecipe.utils.observeOnError
+import com.matiastesio.mvvmrecipe.utils.observeOnLoading
+import com.matiastesio.mvvmrecipe.utils.observeOnSuccess
+import com.matiastesio.mvvmrecipe.utils.setLifecycleOwner
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RecipeListFragment : Fragment() {
 
-    val viewModel: RecipeListViewModel by viewModels()
+    private val viewModel: RecipeListViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setViewObservables()
+        viewModel.getRecipe(34)
+    }
+
+    private fun setViewObservables() {
+        viewModel.recipeResponse.setLifecycleOwner(this)
+            .observeOnSuccess {
+                Log.d("SUCCESS", "setViewObservables: SUCCESS")
+            }
+            .observeOnLoading {
+                Log.d("LOAD", "setViewObservables: LOAD")
+            }
+            .observeOnError {
+                Log.d("ERROR", "setViewObservables: ERROR")
+            }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
