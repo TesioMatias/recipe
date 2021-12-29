@@ -8,6 +8,6 @@ class RecipeUseCase(
     private val authToken: String
 ) {
 
-    suspend operator fun invoke(recipeNumber: Int): Recipe? = recipeRepository.get(authToken, recipeNumber)
+    suspend operator fun invoke(page: Int, query: String): List<Recipe> = recipeRepository.search(authToken, page,query)
 
 }
