@@ -69,18 +69,22 @@ class RecipeListFragment : Fragment() {
                     Box(
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        LazyColumn {
-                            itemsIndexed(
-                                items = recipies
-                            ) { index, item ->
-                                RecipeCard(
-                                    recipe = item,
-                                    onClick = {}
-                                )
+                        if (loading) {
+                            LoadingRecipeListShimmer(imageHeight = 250.dp)
+                        } else {
+                            LazyColumn {
+                                itemsIndexed(
+                                    items = recipies
+                                ) { index, item ->
+                                    RecipeCard(
+                                        recipe = item,
+                                        onClick = {}
+                                    )
+                                }
                             }
                         }
 
-                        CircularIndeterminateProgressBar(isDisplayed = loading)
+                        // CircularIndeterminateProgressBar(isDisplayed = loading)
                     }
                 }
             }

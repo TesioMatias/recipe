@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.matiastesio.mvvmrecipe.domain.model.Recipe
 import com.matiastesio.mvvmrecipe.usecase.RecipeUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class RecipeListViewModel
@@ -29,6 +30,7 @@ constructor(
         viewModelScope.launch {
             loading.value = true
             resetSearchState()
+            delay(3000)
             val result = recipeUseCase(page = 1, query = query.value)
             recipe.value = result
             loading.value = false
