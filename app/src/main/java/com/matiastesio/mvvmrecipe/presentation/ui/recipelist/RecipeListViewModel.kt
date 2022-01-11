@@ -1,16 +1,12 @@
 package com.matiastesio.mvvmrecipe.presentation.ui.recipelist
 
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.matiastesio.mvvmrecipe.domain.model.Recipe
 import com.matiastesio.mvvmrecipe.usecase.RecipeUseCase
-import com.matiastesio.mvvmrecipe.utils.MutableLiveResource
-import com.matiastesio.mvvmrecipe.utils.getLiveData
-import com.matiastesio.mvvmrecipe.utils.launchResource
 import kotlinx.coroutines.launch
 
 class RecipeListViewModel
@@ -20,21 +16,47 @@ constructor(
 ) : ViewModel() {
 
     val recipe: MutableState<List<Recipe>> = mutableStateOf(listOf())
-
-    val query = mutableStateOf("Chicken")
+    val query = mutableStateOf("")
+    val selectedCategory: MutableState<FoodCategory?> = mutableStateOf(null)
+    var categoryScrollPosition: Float = 0f
+    val loading = mutableStateOf(false)
 
     init {
-        newSearch(query.value)
+        newSearch()
     }
 
-    fun newSearch(query: String) {
-        viewModelScope.launch{
-            val result = recipeUseCase(page = 1, query = query)
+    fun newSearch() {
+        viewModelScope.launch {
+            loading.value = true
+            resetSearchState()
+            val result = recipeUseCase(page = 1, query = query.value)
             recipe.value = result
+            loading.value = false
         }
     }
 
     fun onQueryChanged(query: String) {
         this.query.value = query
+    }
+
+    fun onSelectedCategoryChanged(category: String) {
+        val newCategory = getFoodCategory(category)
+        selectedCategory.value = newCategory
+        onQueryChanged(category)
+    }
+
+    fun onChangeCategoryScrollPosition(position: Float) {
+        categoryScrollPosition = position
+    }
+
+    private fun clearSelectedCategory() {
+        selectedCategory.value = null
+    }
+
+    private fun resetSearchState() {
+        recipe.value = listOf()
+        if (selectedCategory.value?.value != query.value) {
+            clearSelectedCategory()
+        }
     }
 }
